@@ -1,0 +1,400 @@
+---
+title: "Exploring the Interactions Between Lifestyle Factors and Demographics in Heart Disease"
+author: "Lena"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+  pdf_document: default
+bibliography: C:/Users/lenan/OneDrive/Documents/R/STAT373/references.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## An abstract
+Cardiovascular disease (CVD) remains the leading cause of death globally, accounting for approximately 32% of all deaths (World Health Organization, 2021). This study explores key risk factors associated with heart disease, focusing on how behaviors such as smoking, physical activity, and diet, along with medical conditions like diabetes, influence cardiovascular health. Using data from the 2022 CDC survey, which includes over 400,000 adult participants across the United States, this research examines how smoking, physical activity, body mass index (BMI), diabetes prevalence, and demographic factors such as age, sex, and race are linked to CVD risk (Centers for Disease Control and Prevention, 2022). 
+
+While the study is limited by its cross-sectional design and reliance on self-reported data, the findings provide valuable insights for public health efforts aimed at early prevention and intervention. By identifying key predictors of heart disease, this research aims to inform targeted strategies to reduce risk, particularly among younger adults who may not yet perceive themselves as being at risk.
+
+## Introduction
+
+When people think of heart disease, they often picture older adults with long histories of poor health habits. However, the foundation for cardiovascular disease (CVD) is often established much earlier in life, sometimes without any obvious warning signs. As a young adult in my 20s, I began to wonder: Could the lifestyle choices I make today affect my heart health decades from now? Am I already at risk, even if I feel healthy? This project was conceived from those questions.
+
+Cardiovascular disease remains the leading cause of death worldwide, accounting for approximately 32% of all deaths. In 2019 alone, an estimated 17.9 million people died from CVDs, with 85% of those deaths attributed to heart attacks and strokes (World Health Organization, 2021). Despite being largely preventable, heart disease continues to affect millions of people across all age groups, underscoring the need for early awareness and intervention ((Roth et al., 2020)
+
+This research aims to explore the key behavioral, medical, and demographic factors associated with heart disease. By analyzing a large, nationally representative dataset from the CDC, this study seeks to identify which variables are most strongly linked to CVD and whether these factors vary among different populations. The ultimate goal is to inform better prevention strategies, especially for young adults, before clinical symptoms ever appear.
+
+
+## Background
+
+Cardiovascular disease (CVD) includes a variety of conditions affecting the heart and blood vessels, such as coronary artery disease, heart attacks, heart failure, and strokes. It remains a leading cause of death worldwide (World Health Organization, 2021). CVD is part of a broader category known as non-communicable diseases (NCDs), which are increasingly concerning due to their prevalence and the economic burden they impose on societies (Adhikary et al., 2022).
+
+Heart disease is influenced by various modifiable and non-modifiable risk factors, which are categorized into behavioral, biological, and environmental factors. The combined impact of these factors can significantly increase an individual’s likelihood of developing heart disease (Australian Institute of Health and Welfare, 2024).
+
+Some prominent modifiable behavioral and medical risk factors include:
+
+- **Body Mass Index (BMI):** BMI measures body fat based on height and weight. A higher BMI is strongly associated with an increased risk of developing heart disease, as it can lead to obesity, hypertension, and other metabolic disorders that strain the cardiovascular system (Vaduganathan et al., 2022).
+
+- **Smoking:** Smoking is one of the most well-established risk factors for heart disease. It promotes the buildup of fatty deposits in the arteries, leading to atherosclerosis (narrowing of the arteries), which increases the risk of heart attacks and strokes (Vaduganathan et al., 2022).
+
+- **Physical Activity:** Regular physical activity is essential for maintaining heart health. Exercise helps lower blood pressure, improve cholesterol levels, and reduce the risk of obesity—all contributing factors to heart disease risk. A lack of physical activity is associated with increased CVD risk (American Heart Association, 2022).
+
+- **Diabetes:** Individuals with diabetes face a significantly higher risk of heart disease. High blood sugar levels can damage blood vessels and the heart, leading to complications such as coronary artery disease (Adhikary et al., 2022).
+
+- **Alcohol Consumption:** Excessive alcohol intake can contribute to various cardiovascular problems, including high blood pressure and irregular heart rhythms, which increase the likelihood of developing heart disease (Vaduganathan et al., 2022).
+
+- **Age:** The risk of heart disease naturally increases with age. As people age, arteries become stiffer and less flexible, contributing to higher blood pressure and an increased risk of cardiovascular problems (American Heart Association, 2022).
+
+The Global Burden of Disease (GBD) Study identifies additional environmental and metabolic risk factors for CVD, including ambient particulate matter air pollution, household air pollution from solid fuels, high systolic blood pressure, high low-density lipoprotein cholesterol (LDL-C), and dietary risks (Vaduganathan et al., 2022). These environmental and metabolic factors interact with lifestyle choices, amplifying the overall burden of cardiovascular disease globally.
+
+This study utilizes data from the 2022 CDC survey to analyze various health-related variables, including smoking, physical activity, BMI, diabetes prevalence, and alcohol consumption. The goal is to understand how these factors, both individually and in combination, contribute to heart disease risk. By focusing on these variables, this study aims to identify key predictors of cardiovascular disease and provide valuable insights for public health efforts designed to reduce the growing burden of CVD.
+
+
+## Research Question and Aim of the project
+
+The central research question guiding this analysis is: "What are the key demographic, lifestyle, and health-related factors contributing to the presence of heart disease, and how can it be prevented, particularly among younger individuals?" 
+
+This study aims to identify the primary risk factors for heart disease, focusing on issues such as smoking, physical inactivity, high body mass index (BMI), and diabetes, while also examining their impact on younger populations. Additionally, the research will investigate the relationship between comorbidities—such as stroke, diabetes, and kidney disease—and the increased likelihood of developing heart disease.
+
+Furthermore, the analysis will explore how demographic factors like age, sex, and race influence heart disease risk, with special attention to younger individuals. Beyond merely identifying risk factors, this study will examine the potential for prevention. 
+By addressing both the factors contributing to heart disease and strategies for prevention, this study aims to provide valuable insights that can inform public health strategies and encourage early intervention for younger populations.
+
+## Rationale
+Heart disease remains the number one killer worldwide, outstripping all other causes of death as key risk factors continue to surge, according to the 2025 Heart Disease and Stroke Statistics (sciencedaily2025). While the individual risk factors for heart disease—such as smoking, physical inactivity, poor diet, high body mass index (BMI), and diabetes—are well documented, their combined effects and interactions across different demographic groups (age, sex, and race) have not been thoroughly studied. This gap in research presents an opportunity to gain a more comprehensive understanding of how these factors collectively contribute to heart disease risk, especially among younger populations who may not see themselves as vulnerable.
+
+Risk factors for stroke can be categorized as modifiable and non-modifiable. Age, sex, and race/ethnicity are non-modifiable risk factors for both ischemic and hemorrhagic stroke, while hypertension, smoking, diet, and physical inactivity are among some of the more commonly reported modifiable risk factor (Boehme, Esenwa and Elkind, 2017).
+As the global burden of heart disease grows, it becomes increasingly important to develop prevention efforts that address these variations, particularly for younger individuals who may be at risk without realizing it.
+
+This study aims to address these gaps by examining how demographic factors and lifestyle choices interact to influence heart disease risk in diverse populations. By focusing on modifiable factors that can be addressed early in life—such as physical activity, diet, smoking, and stress management—the research seeks to provide evidence-based insights that can inform public health policies and interventions aimed at younger populations. Through this approach, the study hopes to emphasize the importance of early prevention strategies and contribute to reducing the global impact of heart disease
+
+## Data Description
+The dataset used in this analysis is sourced from the 2022 annual CDC survey, which includes health data from over 400,000 adults across the United States. It focuses on key factors related to heart disease and its risk indicators, such as BMI, physical activity, smoking, alcohol consumption, and diabetes. The data is publicly available, with the permission for research and analysis, provided proper attribution is made to the CDC. This dataset includes demographic variables (age, sex, race/ethnicity), health-related factors (such as BMI and diabetes status), and lifestyle habits, all of which are crucial for examining the prevalence and predictors of heart disease. The HeartDisease variable is the primary outcome of interest, with independent variables like Physical Activity and Smoking being analyzed to assess their influence on heart disease risk. However, the dataset has limitations, including the reliance on self-reported data, which may introduce biases, and the fact that it is cross-sectional, limiting the ability to draw causal conclusions. Despite these limitations, the dataset provides valuable insights into the factors that contribute to heart disease and can be used for predictive analysis and identifying high-risk groups.
+
+## Exploratory data analysis
+In this exploratory data analysis (EDA), we created several new variables to better understand the relationships between lifestyle factors, demographics, and heart disease. We constructed a BMI category variable that groups individuals as follows: underweight (BMI < 18.5), normal weight (18.5 ≤ BMI < 24.9), overweight (25 ≤ BMI < 29.9), and obese (BMI ≥ 30). Additionally, we introduced an age group variable to analyze trends in heart disease across different age categories.
+
+To explore the potential relationship between mental health and heart disease rates, we added a new mental health variable. We also created two lifestyle variables: one for alcohol consumption (comparing alcohol drinkers to non-drinkers) and another for smoking (differentiating smokers from non-smokers). These variables help identify any links to heart disease.
+
+Furthermore, two additional variables were developed to analyze the impact of kidney disease and asthma on heart disease risk. Lastly, we assessed the influence of race and sleep duration on heart disease by grouping these variables and visualizing them using box plots and bar charts. This approach allows us to uncover patterns and relationships that may not be immediately apparent from the raw data.
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(readr)
+library(readr)
+library(readr)
+heart_2020_cleaned <- read_csv("heart_2020_cleaned.csv")
+View(heart_2020_cleaned)
+View(heart_2020_cleaned)
+# Summary statistics
+heart_2020_cleaned %>%
+  summarize(
+    mean_BMI = mean(BMI, na.rm = TRUE),
+    median_BMI = median(BMI, na.rm = TRUE),
+    sd_BMI = sd(BMI, na.rm = TRUE),
+    mean_PhysicalHealth = mean(PhysicalHealth, na.rm = TRUE),
+    mean_MentalHealth = mean(MentalHealth, na.rm = TRUE),
+    mean_SleepTime = mean(SleepTime, na.rm = TRUE)
+  )
+
+heart_2020_cleaned <- heart_2020_cleaned %>%
+  mutate(BMI_Category = case_when(
+    BMI < 18.5 ~ "Underweight",
+    BMI >= 18.5 & BMI < 24.9 ~ "Normal weight",
+    BMI >= 25 & BMI < 29.9 ~ "Overweight",
+    BMI >= 30 ~ "Obese",
+    TRUE ~ "Unknown"  
+  ))
+
+# Load necessary libraries
+library(tidyverse)
+
+# Convert PhysicalHealth into categorized levels
+heart_2020_cleaned <- heart_2020_cleaned %>%
+  mutate(PhysicalHealthLevel = case_when(
+    PhysicalHealth <= 5 ~ "Good",
+    PhysicalHealth > 5 & PhysicalHealth <= 15 ~ "Moderate",
+    PhysicalHealth > 15 ~ "Poor",
+    TRUE ~ NA_character_
+  ))
+heart_2020_cleaned %>%
+  count(PhysicalHealthLevel)
+
+library(tidyverse)
+# Create MentalHealthLevel variable
+heart_2020_cleaned <- heart_2020_cleaned %>%
+  mutate(MentalHealthLevel = case_when(
+    MentalHealth <= 5 ~ "Good",
+    MentalHealth > 5 & MentalHealth <= 15 ~ "Moderate",
+    MentalHealth > 15 ~ "Poor",
+    TRUE ~ NA_character_
+  ))
+heart_2020_cleaned %>%
+  count(MentalHealthLevel)
+
+library(ggplot2)
+library(dplyr)
+# Create a new variable to group Alcohol drinkers and Non-drinkers
+heart_2020_cleaned <- heart_2020_cleaned %>%
+  mutate(AlcoholGroup = ifelse(AlcoholDrinking == "Yes", "Alcohol Drinker", "Non-Alcohol Drinker"))
+
+# Subset data for Smokers and Non-Smokers
+smokers_data <- heart_2020_cleaned %>% filter(Smoking == "Yes")
+non_smokers_data <- heart_2020_cleaned %>% filter(Smoking == "No")
+
+# Heart disease by race
+heart_2020_cleaned %>%
+  group_by(Race) %>%
+  summarise(HeartDiseaseRate = mean(HeartDisease == "Yes")) %>%
+  arrange(desc(HeartDiseaseRate))
+
+# Heart disease by asthma
+heart_2020_cleaned %>%
+  group_by(Asthma) %>%
+  summarise(HeartDiseaseRate = mean(HeartDisease == "Yes"))
+
+# Heart disease by kidney disease
+heart_2020_cleaned %>%
+  group_by(KidneyDisease) %>%
+  summarise(HeartDiseaseRate = mean(HeartDisease == "Yes"))
+
+library(tidyverse)
+# Convert categorical variables to factors
+heart_2020_cleaned <- heart_2020_cleaned %>%
+  mutate(
+    HeartDisease = factor(HeartDisease),        
+    Smoking = factor(Smoking),                
+    AlcoholDrinking = factor(AlcoholDrinking),  
+    Stroke = factor(Stroke),                  
+    DiffWalking = factor(DiffWalking),          
+    Sex = factor(Sex),                          
+    AgeCategory = factor(AgeCategory),          
+    Race = factor(Race),                        
+    Diabetic = factor(Diabetic),                
+    PhysicalActivity = factor(PhysicalActivity),
+    GenHealth = factor(GenHealth),              
+    Asthma = factor(Asthma),                    
+    KidneyDisease = factor(KidneyDisease),      
+    SkinCancer = factor(SkinCancer)           
+)
+str(heart_2020_cleaned)
+
+```
+
+
+## Data Visualization
+
+
+```{r , echo=FALSE}
+# Plot pie chart for Non-Smokers
+non_smokers_percentages <- non_smokers_data %>%
+  group_by(HeartDisease) %>%
+  tally() %>%
+  mutate(percentage = n / sum(n) * 100)
+
+ggplot(non_smokers_percentages, aes(x = "", y = percentage, fill = HeartDisease)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar(theta = "y") +  # Makes the bar chart a pie chart
+  labs(title = "Figure 1: Heart Disease Proportion Among Non-Smokers", 
+       x = "", y = "Percentage") +
+  scale_fill_manual(values = c("No" = "lightblue", "Yes" = "red")) +
+  theme_void() +  # Removes unnecessary labels
+  theme(legend.position = "bottom")
+
+# Plot pie chart for Smokers
+smokers_percentages <- smokers_data %>%
+  group_by(HeartDisease) %>%
+  tally() %>%
+  mutate(percentage = n / sum(n) * 100)
+
+ggplot(smokers_percentages, aes(x = "", y = percentage, fill = HeartDisease)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar(theta = "y") + # Makes the bar chart a pie chart
+  labs(title = "Figure 1.1: Heart Disease Proportion Among Smokers", 
+       x = "", y = "Percentage") +
+  scale_fill_manual(values = c("No" = "lightblue", "Yes" = "red")) +
+  theme_void() +  # Removes unnecessary labels
+  theme(legend.position = "bottom")
+```
+Figure 1, Figure  1.1 and Figure 2 present pie charts illustrating the proportion of heart disease among smokers and non-smokers. It is evident that individuals who smoke have a significantly higher tendency to develop heart disease compared to non-smokers. Research by Hackshaw et al. (2018) highlights that even smoking as little as one cigarette per day substantially increases the risk of developing coronary heart disease and stroke—approximately half the risk faced by those who smoke 20 cigarettes per day.
+
+```{r , echo=FALSE}
+# Summarize the data for AlcoholDrinking and HeartDisease
+heart_data_summary <- heart_2020_cleaned %>%
+  group_by(AlcoholGroup, HeartDisease) %>%
+  summarise(count = n()) %>%
+  ungroup() %>%
+  mutate(percentage = count / sum(count) * 100)  # Calculate the percentage
+
+# Create side-by-side bar charts
+ggplot(heart_data_summary, aes(x = HeartDisease, y = percentage, fill = HeartDisease)) +
+  geom_bar(stat = "identity", position = "dodge", width = 0.7) +  # Side-by-side bars
+  facet_wrap(~ AlcoholGroup) +  # Facet by AlcoholGroup
+  labs(title = "Figure 2: Heart Disease Proportion by Alcohol Consumption",
+       x = "Heart Disease Status", y = "Percentage") +
+  scale_fill_manual(values = c("lightblue", "red")) +  # Customize the color
+  theme_minimal() +
+  theme(legend.title = element_blank())
+
+```
+
+```{r , echo=FALSE}
+# Summarize the data for BMI categories and HeartDisease
+heart_data_bmi_summary <- heart_2020_cleaned %>%
+  group_by(BMI_Category, HeartDisease) %>%
+  summarise(count = n()) %>%
+  ungroup() %>%
+  mutate(percentage = count / sum(count) * 100)  # Calculate percentage
+
+# Create side-by-side bar charts for BMI categories and Heart Disease
+ggplot(heart_data_bmi_summary, aes(x = HeartDisease, y = percentage, fill = HeartDisease)) +
+  geom_bar(stat = "identity", position = "dodge", width = 0.7) +  # Side-by-side bars
+  facet_wrap(~ BMI_Category) +  # Facet by BMI category
+  labs(title = "Figure 3: Heart Disease Proportion by BMI Category",
+       x = "Heart Disease Status", y = "Percentage") +
+  scale_fill_manual(values = c("lightblue", "red")) +  # Customize colors for No and Yes
+  theme_minimal() +
+  theme(legend.title = element_blank())
+```
+Figure 3 shows the relationship between heart disease risk and different BMI categories. It clearly illustrates that individuals with a normal weight have a significantly lower risk of developing heart disease. In contrast, overweight and obesity are associated with a much higher risk, reinforcing the well-established link between excess body weight and cardiovascular conditions.
+
+Interestingly, the data set shows a lower percentage of heart disease cases among underweight individuals. This finding may seem counter-intuitive and could be due to data collection limitations, such as a small sample size in the underweight category or misreporting of weight and health status. It's also possible that underweight individuals in the sample are younger or have different lifestyle factors that reduce their heart disease risk, though this would require further investigation to confirm.
+
+
+```{r , echo=FALSE}
+#BoxPlot for sleep time
+ggplot(heart_2020_cleaned, aes(x = HeartDisease, y = SleepTime, fill = HeartDisease)) +
+  geom_boxplot() +
+  labs(title = "Figure 4: Sleep Time Distribution by Heart Disease Status",
+       x = "Heart Disease", y = "Sleep Time (Hours)") +
+  scale_fill_manual(values = c("No" = "lightgreen", "Yes" = "red")) +
+  theme_minimal()
+
+#Heart Disease Proportion by Comorbid Conditions
+heart_2020_cleaned %>%
+  pivot_longer(cols = c(KidneyDisease, SkinCancer),
+               names_to = "Condition",
+               values_to = "HasCondition") %>%
+  filter(HasCondition == "Yes") %>%
+  ggplot(aes(x = Condition, fill = HeartDisease)) +
+  geom_bar(position = "fill") +
+  labs(title = "Figure 5: Heart Disease Proportion by Comorbid Conditions",
+       x = "Condition", y = "Proportion") +
+  scale_fill_manual(values = c("No" = "lightblue", "Yes" = "red")) +
+  theme_minimal()
+```
+Figure 4 illustrates the distribution of sleep duration based on heart disease status, presented in a box plot. The plot reveals several outliers in this category, which could impact the reliability of our analysis. Given the presence of these outliers and the overlapping interquartile ranges, the findings from this graph should be interpreted cautiously. The box plot does not indicate a clear or direct relationship between the number of hours slept and the presence of cardiovascular disease. This suggests that, within this dataset, sleep duration alone may not be a strong predictor of heart disease, or that other confounding factors may influence the results.
+
+Figure 5 illustrates that individuals with kidney disease have a much higher percentage of heart disease compared to those with skin cancer. This visualization highlights a well-established link between kidney disease and cardiovascular disease. Researchers have long studied this relationship, and it is now understood that kidney disease can directly increase the risk of developing heart disease—and vice versa. In fact, the two conditions often occur together and share several common risk factors, including diabetes and high blood pressure (National Kidney Foundation, 2024).
+```{r , echo=FALSE}
+library(ggplot2)
+
+ggplot(heart_2020_cleaned, aes(x = MentalHealthLevel, fill = HeartDisease)) +
+  geom_bar(position = "dodge") +  # Side-by-side bars
+  labs(title = "Fingure 6: Heart Disease by Mental Health Level",
+       x = "Mental Health Level", y = "Count") +
+  scale_fill_manual(values = c("No" = "lightblue", "Yes" = "red")) +
+  theme_minimal()
+
+ggplot(heart_2020_cleaned, aes(x = PhysicalHealthLevel, fill = HeartDisease)) +
+  geom_bar(position = "dodge") +  # Side-by-side bars
+  labs(title = "Figure 7: Heart Disease by Physical Health Level",
+       x = "Physical Health Level", y = "Count") +
+  scale_fill_manual(values = c("No" = "lightblue", "Yes" = "red")) +
+  theme_minimal()
+```
+Figure 6 and Figure 7 illustrate the relationship between physical health and mental health levels with heart disease. It is clear from the visualizations that individuals with good physical and mental health have a lower percentage of heart disease. In contrast, people with poor physical or mental health show a significantly higher percentage of heart disease cases. This highlights the strong connection between overall well-being—both physical and psychological—and cardiovascular health.
+
+```{r , echo=FALSE}
+#Heart Disease Proportion by Race and Age
+ggplot(heart_2020_cleaned, aes(x = Race, fill = HeartDisease)) +
+  geom_bar(position = "fill") +
+  facet_wrap(~ AgeCategory) +
+  labs(title = "Figure 8: Heart Disease Proportion by Race and Age",
+       y = "Proportion") +
+  scale_fill_manual(values = c("No" = "lightblue", "Yes" = "red")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+Figure 9 shows that older individuals have a higher percentage of heart disease compared to younger age groups. Additionally, the figure indicates that certain racial and ethnic groups—specifically Alaska Natives, Black, and Hispanic populations—exhibit higher percentages of heart disease. These disparities may reflect a combination of genetic, socioeconomic, and healthcare access factors that contribute to increased cardiovascular risk in these communities.
+```{r , echo=FALSE}
+# Logistic Regression to predict Heart Disease based on BMI, Smoking, PhysicalActivity, and MentalHealth
+logistic_model <- glm(HeartDisease ~ BMI + Smoking + PhysicalActivity + MentalHealthLevel + PhysicalHealthLevel + AgeCategory + Sex + AlcoholDrinking,
+                      data = heart_2020_cleaned,
+                      family = binomial)
+
+# Summary of the Logistic Regression Model
+summary(logistic_model)
+
+# Odds Ratios for easier interpretation
+exp(coef(logistic_model))
+
+# Predict the probabilities of heart disease based on the model
+heart_2020_cleaned$predicted_probs <- predict(logistic_model, type = "response")
+
+# Evaluate the model performance (Confusion Matrix and AUC)
+library(caret)
+library(pROC)
+
+# Creating the predicted labels (based on a threshold of 0.5)
+heart_2020_cleaned$predicted_labels <- ifelse(heart_2020_cleaned$predicted_probs > 0.5, "Yes", "No")
+
+# Confusion Matrix
+conf_matrix <- confusionMatrix(factor(heart_2020_cleaned$predicted_labels), factor(heart_2020_cleaned$HeartDisease))
+conf_matrix
+
+# ROC Curve
+roc_curve <- roc(heart_2020_cleaned$HeartDisease, heart_2020_cleaned$predicted_probs)
+plot(roc_curve, main = "ROC Curve", col = "blue", lwd = 2)
+
+```
+
+The logistic regression analysis identified several significant predictors of heart disease.
+All significant predictors in the logistic regression model met the conventional significance threshold of p < 0.05, with most variables showing highly significant results (p < 0.001), reinforcing the reliability of the associations observed."
+Notably, smoking significantly increased the risk, with smokers having 1.62 times higher odds of developing heart disease compared to non-smokers (p < 0.001). Similarly, poor physical health (odds ratio [OR] = 2.58, p < 0.001) and poor mental health (OR = 1.51, p < 0.001) were strongly associated with an increased risk of heart disease. Engaging in physical activity appeared protective, reducing the odds by approximately 21% (OR = 0.79, p < 0.001). 
+
+Age also had a significant impact: individuals aged 80 or older had over 43 times higher odds of heart disease compared to the youngest age group (p < 0.001). Interestingly, alcohol consumption was associated with lower odds of heart disease (OR = 0.69, p < 0.001), though this may be influenced by moderation effects or confounding factors. 
+
+Overall, these findings highlight the importance of modifiable lifestyle choices and demographic factors in determining heart disease risk.
+
+## Conclusion/Dicussion
+The primary research question guiding this study was: “What key demographic, lifestyle, and health-related factors contribute to the presence of heart disease, and how can younger individuals reduce their risk early on?”
+
+Through exploratory data analysis, visualization, and logistic regression, we identified several significant predictors of heart disease. The findings indicate that modifiable lifestyle factors—particularly smoking, physical inactivity, high BMI, and poor mental and physical health—are strongly associated with an increased risk of developing heart disease.
+
+The logistic regression model revealed the following:
+- Smoking significantly increased the odds of heart disease (p < 0.001).
+- Physical activity was associated with a reduced risk (p < 0.001).
+- Both poor mental and physical health levels showed strong associations with heart disease, with poor physical health nearly tripling the odds compared to good health.
+- A higher BMI was also a statistically significant factor (p < 0.001).
+- Age and sex were relevant, as heart disease was more prevalent in older age groups and among males.
+These results emphasize that heart disease is not only influenced by biological or genetic factors but is also heavily shaped by lifestyle behaviors—many of which can be addressed early in life. Therefore, for young adults, adopting healthy habits such as regular exercise, avoiding tobacco use, managing stress and mental health, and maintaining a healthy weight can significantly reduce long-term cardiovascular risk.
+
+In conclusion, this study highlights the importance of preventive health strategies, especially among younger populations, to mitigate risk before symptoms or conditions develop. Early lifestyle interventions are critical for lowering the burden of heart disease at both individual and public health levels.
+
+## Reference
+1. Adhikary, D., S. Barman, R. Ranjan, and H. Stone. 2022. “A Systematic Review of Major Cardiovascular Risk Factors: A Growing Global Health Concern.” Cureus 14 (10). https://doi.org/https://doi.org/10.7759/cureus.30119.
+
+2. Boehme, A. K., C. Esenwa, and M. S. V. Elkind. 2017. “Stroke Risk Factors, Genetics, and Prevention.” Circulation Research 120 (3): 472–95. https://doi.org/10.1161/CIRCRESAHA.116.308398.
+
+3. Hackshaw, A., Morris, J.K., Boniface, S., Tang, J.-L. and Milenković, D. (2018). Low cigarette consumption and risk of coronary heart disease and stroke: meta-analysis of 141 cohort studies in 55 study reports. BMJ, [online] 360(8138), p.j5855. doi:https://doi.org/10.1136/bmj.j5855.
+
+4. National Kidney Foundation (2024). The Heart and Kidney Connection. [online] National Kidney Foundation. Available at: https://www.kidney.org/kidney-topics/heart-and-kidney-connection.
+
+
+5. Vaduganathan, M., G. A. Mensah, J. V. Turco, V. Fuster, and G. A. Roth. 2022. “The Global Burden of Cardiovascular Diseases and Risk: A Compass for Future Health.” Journal of the American College of Cardiology 80 (25). https://doi.org/https://doi.org/10.1016/j.jacc.2022.11.005.
+
+6. ScienceDaily. (2025). Heart disease remains leading cause of death as key health risk factors continue to rise. [online] Available at: https://www.sciencedaily.com/releases/2025/01/250127124438.htm.
+
+7. Earth.com. (2025). Heart disease remains the leading cause of death worldwide. [online] Available at: https://www.earth.com/news/heart-disease-remains-the-leading-cause-of-death-worldwide/.
+
+8. Roth, G.A., Mensah, G.A., Johnson, C.O., Addolorato, G., Ammirati, E., Baddour, L.M., Barengo, N.C., Beaton, A.Z., Benjamin, E.J., Benziger, C.P., Bonny, A., Brauer, M., Brodmann, M., Cahill, T.J., Carapetis, J., Catapano, A.L., Chugh, S.S., Cooper, L.T., Coresh, J. and Criqui, M. (2020). Global Burden of Cardiovascular Diseases and Risk Factors, 1990-2019: Update From the GBD 2019 Study. Journal of the American College of Cardiology, 76(25), pp.2982–3021.
+
+9. World Health Organization (WHO) (2021). Cardiovascular Diseases (CVDs). [online] World Health Organization. Available at: https://www.who.int/news-room/fact-sheets/detail/cardiovascular-diseases-(cvds).
+
+
+
